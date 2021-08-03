@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
   //------------------------------------------------------------------
   TextEditingController pincodecontroller = TextEditingController();
   TextEditingController daycontroller = TextEditingController();
+  List slots = [];
   //------------------------------------------------------------------
 
   fetchslots() async {
@@ -45,7 +46,9 @@ class _HomeState extends State<Home> {
                 daycontroller.text))
         .then((value) {
       Map result = jsonDecode(value.body);
-      print(result);
+      setState(() {
+        slots = result['sessions'];
+      });
     });
   }
 
@@ -53,7 +56,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Vaccination Slots'),
+        title: Center(child: Text('Vaccination Slots')),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -91,7 +94,7 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.only(top: 5, right: 20, left: 20),
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
