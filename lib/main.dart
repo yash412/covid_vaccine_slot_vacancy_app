@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:covid_vaccine_slot_vacancy_app/slots.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'slots.dart';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
 
 void main() => runApp(new MyApp());
@@ -49,6 +51,12 @@ class _HomeState extends State<Home> {
       setState(() {
         slots = result['sessions'];
       });
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Slot(
+                    slots: slots,
+                  )));
     });
   }
 
@@ -87,8 +95,14 @@ class _HomeState extends State<Home> {
                   hintText: 'Enter Date',
                 ),
                 onTap: () async {
-                  var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
-                  daycontroller.text = DateFormat('dd-MM-yyyy hh:mm:ss').format(date!).substring(0, 10);
+                  var date = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2100));
+                  daycontroller.text = DateFormat('dd-MM-yyyy hh:mm:ss')
+                      .format(date!)
+                      .substring(0, 10);
                 },
               ),
             ),
